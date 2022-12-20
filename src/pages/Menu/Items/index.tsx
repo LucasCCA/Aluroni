@@ -1,4 +1,4 @@
-import items from './items.json';
+import menu from 'data/menu.json';
 import Item from './Item';
 import styles from './Items.module.scss';
 import { useEffect, useState } from 'react';
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function Items(props: Props) {
-    const [list, setList] = useState(items);
+    const [list, setList] = useState(menu);
     const { search, filter, order } = props;
 
     function testSearch(title: string) {
@@ -24,13 +24,13 @@ export default function Items(props: Props) {
     }
 
     const orderCrescent = (
-        list: typeof items,
+        list: typeof menu,
         property: 'size' | 'serving' | 'price'
     ) => {
         return list.sort((a, b) => (a[property] > b[property] ? 1 : -1));
     };
 
-    function handleOrder(newList: typeof items) {
+    function handleOrder(newList: typeof menu) {
         switch (order) {
         case 'porcao':
             return orderCrescent(newList, 'size');
@@ -44,7 +44,7 @@ export default function Items(props: Props) {
     }
 
     useEffect(() => {
-        const newList = items.filter(
+        const newList = menu.filter(
             (item) => testSearch(item.title) && testFilter(item.category.id)
         );
         setList(handleOrder(newList));
