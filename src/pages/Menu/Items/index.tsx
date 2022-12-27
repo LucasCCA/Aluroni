@@ -1,7 +1,8 @@
-import items from "./items.json";
+import menu from "data/menu.json";
 import Item from "./Item";
 import styles from "./Items.module.scss";
 import { useEffect, useState } from "react";
+import { Menu } from "types/Meals";
 
 interface Props {
   search: string;
@@ -10,7 +11,7 @@ interface Props {
 }
 
 export default function Items(props: Props) {
-  const [list, setList] = useState(items);
+  const [list, setList] = useState(menu);
   const { search, filter, order } = props;
 
   function testSearch(title: string) {
@@ -24,27 +25,27 @@ export default function Items(props: Props) {
   }
 
   const orderCrescent = (
-    list: typeof items,
+    list: Menu,
     property: "size" | "serving" | "price"
   ) => {
     return list.sort((a, b) => (a[property] > b[property] ? 1 : -1));
   };
 
-  function handleOrder(newList: typeof items) {
+  function handleOrder(newList: Menu) {
     switch (order) {
-      case "porcao":
-        return orderCrescent(newList, "size");
-      case "qtd_pessoas":
-        return orderCrescent(newList, "serving");
-      case "preco":
-        return orderCrescent(newList, "price");
-      default:
-        return newList;
+    case "porcao":
+      return orderCrescent(newList, "size");
+    case "qtd_pessoas":
+      return orderCrescent(newList, "serving");
+    case "preco":
+      return orderCrescent(newList, "price");
+    default:
+      return newList;
     }
   }
 
   useEffect(() => {
-    const newList = items.filter(
+    const newList = menu.filter(
       (item) => testSearch(item.title) && testFilter(item.category.id)
     );
     setList(handleOrder(newList));
