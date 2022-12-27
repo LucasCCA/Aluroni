@@ -18,8 +18,8 @@ export default function AppRouter() {
             <Route index element={<Home />} />
             <Route path="menu" element={<Menu />} />
             <Route path="sobre" element={<About />} />
-            <Route path="prato/:id" element={<Meal />} />
           </Route>
+          <Route path="prato/:id" element={<Meal />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
