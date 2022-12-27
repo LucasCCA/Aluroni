@@ -2,6 +2,7 @@ import menu from "data/menu.json";
 import Item from "./Item";
 import styles from "./Items.module.scss";
 import { useEffect, useState } from "react";
+import { Menu } from "types/Meals";
 
 interface Props {
   search: string;
@@ -24,13 +25,13 @@ export default function Items(props: Props) {
   }
 
   const orderCrescent = (
-    list: typeof menu,
+    list: Menu,
     property: "size" | "serving" | "price"
   ) => {
     return list.sort((a, b) => (a[property] > b[property] ? 1 : -1));
   };
 
-  function handleOrder(newList: typeof menu) {
+  function handleOrder(newList: Menu) {
     switch (order) {
     case "porcao":
       return orderCrescent(newList, "size");

@@ -2,10 +2,19 @@ import menu from "data/menu.json";
 import styles from "./Home.module.scss";
 import stylesTheme from "styles/Theme.module.scss";
 import nossaCasa from "assets/nossa_casa.png";
+import { useNavigate } from "react-router-dom";
+import { Meal } from "types/Meals";
 
 export default function Home() {
   let RecommendedMeals = [...menu];
   RecommendedMeals = RecommendedMeals.sort(() => 0.5 - Math.random()).splice(0,3); 
+  
+  const navigate = useNavigate();
+
+  function seeMore(meal: Meal) {
+    navigate(`/prato/${meal.id}`, { state: { meal }, replace: false });
+  }
+
   return (
     <section>
       <h3 className={stylesTheme.titulo}>Recomendações da cozinha</h3>
@@ -15,7 +24,10 @@ export default function Home() {
             <div className={styles.recomendado__imagem}>
               <img src={item.photo} alt={item.title} />
             </div>
-            <button className={styles.recomendado__botao}>
+            <button 
+              className={styles.recomendado__botao} 
+              onClick={() => seeMore(item)}
+            >
               Ver mais
             </button>
           </div>
